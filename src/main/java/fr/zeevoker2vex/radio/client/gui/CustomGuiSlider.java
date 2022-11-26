@@ -1,8 +1,9 @@
 package fr.zeevoker2vex.radio.client.gui;
 
 import fr.nathanael2611.modularvoicechat.util.Helpers;
+import fr.zeevoker2vex.radio.client.ClientProxy;
 import fr.zeevoker2vex.radio.common.network.NetworkHandler;
-import fr.zeevoker2vex.radio.common.network.server.RadioChangeVolumePacket;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -79,6 +80,6 @@ public class CustomGuiSlider extends GuiButton {
     public void mouseReleased(int mouseX, int mouseY) {
         this.dragging = false;
         short val = (short) (minValue + Helpers.crossMult(sliderValue, 1, maxValue));
-        NetworkHandler.getInstance().getNetwork().sendToServer(new RadioChangeVolumePacket(val));
+        ClientProxy.volume = val;
     }
 }

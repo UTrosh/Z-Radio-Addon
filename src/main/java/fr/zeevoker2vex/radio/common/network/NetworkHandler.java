@@ -3,12 +3,9 @@ package fr.zeevoker2vex.radio.common.network;
 import fr.zeevoker2vex.radio.common.RadioAddon;
 import fr.zeevoker2vex.radio.common.network.client.PlayRadioSoundPacket;
 import fr.zeevoker2vex.radio.common.network.client.RadioResponsePacket;
-import fr.zeevoker2vex.radio.common.network.client.RadioStatePacket;
-import fr.zeevoker2vex.radio.common.network.client.RadioUUIDPacket;
+import fr.zeevoker2vex.radio.common.network.server.PlayerConnectRadioPacket;
 import fr.zeevoker2vex.radio.common.network.server.PlayerDisconnectRadioPacket;
 import fr.zeevoker2vex.radio.common.network.server.PlayerSpeakingOnRadioPacket;
-import fr.zeevoker2vex.radio.common.network.server.PlayerConnectRadioPacket;
-import fr.zeevoker2vex.radio.common.network.server.RadioChangeVolumePacket;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -38,14 +35,11 @@ public class NetworkHandler {
         registerPacket(PlayRadioSoundPacket.ClientHandler.class, PlayRadioSoundPacket.class, Side.CLIENT);
         registerPacket(PlayerSpeakingOnRadioPacket.ClientHandler.class, PlayerSpeakingOnRadioPacket.class, Side.CLIENT);
         registerPacket(RadioResponsePacket.ClientHandler.class, RadioResponsePacket.class, Side.CLIENT);
-        registerPacket(RadioStatePacket.ClientHandler.class, RadioStatePacket.class, Side.CLIENT);
-        registerPacket(RadioUUIDPacket.ClientHandler.class, RadioUUIDPacket.class, Side.CLIENT);
 
         registerPacket(PlayerConnectRadioPacket.ServerHandler.class, PlayerConnectRadioPacket.class, Side.SERVER);
         registerPacket(PlayerDisconnectRadioPacket.ServerHandler.class, PlayerDisconnectRadioPacket.class, Side.SERVER);
         registerPacket(PlayerSpeakingOnRadioPacket.ServerHandler.class, PlayerSpeakingOnRadioPacket.class, Side.SERVER);
-        registerPacket(RadioChangeVolumePacket.ServerHandler.class, RadioChangeVolumePacket.class, Side.SERVER);
-    }
+   }
 
     private <REQ extends IMessage, REPLY extends IMessage> void registerPacket(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {
         network.registerMessage(messageHandler, requestMessageType, nextID++, side);

@@ -1,7 +1,7 @@
 package fr.zeevoker2vex.radio.client.gui;
 
 import com.google.common.base.Predicate;
-import fr.zeevoker2vex.radio.common.items.RadioItem;
+import fr.zeevoker2vex.radio.client.ClientProxy;
 import fr.zeevoker2vex.radio.common.network.NetworkHandler;
 import fr.zeevoker2vex.radio.common.network.client.RadioResponsePacket;
 import fr.zeevoker2vex.radio.common.network.server.PlayerConnectRadioPacket;
@@ -12,8 +12,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentTranslation;
 
 import java.awt.*;
@@ -24,10 +22,8 @@ public class RadioGui extends GuiScreen {
 
     public short frequency = 1;
 
-    /**
-     * The radio ItemStack
-     */
-    private final ItemStack stack;
+
+
     /**
      * The field to write the frequency
      */
@@ -65,19 +61,17 @@ public class RadioGui extends GuiScreen {
      */
     private final int MAX_WIDTH = 170;
 
-    public RadioGui(ItemStack stack) {
-        NBTTagCompound nbt = RadioItem.getTagCompound(stack);
-
-        if(nbt.hasKey(RadioItem.FREQUENCY_KEY_TAG)) frequency = nbt.getShort(RadioItem.FREQUENCY_KEY_TAG);
-        this.stack = stack;
+    public RadioGui() {
+this.frequency = ClientProxy.frequency;
     }
+
 
     @Override
     public void initGui() {
         // 10 entre le field et les boutons
         this.addButton(disconnectButton = new GuiButton(0, this.width-90, this.height-80, 80, 20, I18n.format("radio.gui.disconnectButton")));
         this.addButton(connectButton = new GuiButton(1, this.width-240, this.height-80, 80, 20, I18n.format("radio.gui.connectButton")));
-        this.addButton(new CustomGuiSlider(3, this.width-200, this.height-55, RadioItem.getRadioVolume(stack), 0, 100));
+        this.addButton(new CustomGuiSlider(3, this.width-200, this.height-55, ClientProxy.volume, 0, 100));
         // 150 centré sur un truc qui fait 50 : 100 qui dépasse : 50 de chaque côté donc -120-50 = -170
 
         frequencyField = new GuiTextField(2, this.fontRenderer, this.width-150, this.height-80, 50, 20);

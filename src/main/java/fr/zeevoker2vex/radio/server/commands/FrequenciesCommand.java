@@ -10,9 +10,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.server.FMLServerHandler;
 
 import javax.annotation.Nullable;
 import java.util.*;
+
+import static fr.zeevoker2vex.radio.client.ClientProxy.frequency;
 
 public class FrequenciesCommand extends CommandBase {
 
@@ -57,13 +60,11 @@ public class FrequenciesCommand extends CommandBase {
             if(args[0].equals("view")){
                 HashMap<Short, List<String>> frequencies = new HashMap<>();
 
-                for(Map.Entry<EntityPlayer, HashMap<UUID, Short>> entry : RadioManager.playersFrequencies.entrySet()) {
-                    for(short frequency : entry.getValue().values()){
-                        List<String> players = frequencies.getOrDefault(frequency, new ArrayList<>());
-                        players.add(entry.getKey().getName());
+                for(Map.Entry<UUID, Short> entry : RadioManager.playersFrequencies.entrySet()) {
+                    List<String> players = frequencies.getOrDefault(entry.getValue(), new ArrayList<>());
+                    players.add(FMLServerHandler.instance().getServer().getPlayerList().getPlayerByUUID(entry.getKey()).getName());
 
-                        frequencies.put(frequency, players);
-                    }
+                    frequencies.put(frequency, players);
                 }
                 if(!frequencies.isEmpty()) {
                     message = message.reset("§e").addTranslation("cmd.frequencies.view.title");

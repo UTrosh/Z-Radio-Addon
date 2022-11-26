@@ -1,7 +1,7 @@
 package fr.zeevoker2vex.radio.common;
 
 import fr.zeevoker2vex.radio.common.network.NetworkHandler;
-import fr.zeevoker2vex.radio.common.registry.ItemRegistry;
+
 import fr.zeevoker2vex.radio.common.registry.SoundRegistry;
 import fr.zeevoker2vex.radio.server.commands.FrequenciesCommand;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,7 +31,7 @@ public class RadioAddon {
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
 
-        MinecraftForge.EVENT_BUS.register(new ItemRegistry());
+
         MinecraftForge.EVENT_BUS.register(new SoundRegistry());
 
         NetworkHandler.getInstance().registerPackets();
