@@ -9,16 +9,16 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2019, macos-10.15]
+        os: [windows-2019]
     name: ${{ matrix.os }} build
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 8
       - uses: gradle/gradle-build-action@v1
         with:
           distributions-cache-enabled: true
           dependencies-cache-enabled: true
-          configuration-cache-enabled:
+          configuration-cache-enabled: true
